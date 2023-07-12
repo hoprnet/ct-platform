@@ -101,10 +101,6 @@ spec:
                           storage: 100Gi
             grafana:
               enabled: true
-              serviceAccount:
-                name: grafana
-                annotations:
-                  iam.gke.io/gcp-service-account: ARGOCD_ENV_CLUSTER_NAME-grafana@ARGOCD_ENV_GOOGLE_PROJECT.iam.gserviceaccount.com
               adminPassword: ARGOCD_ENV_RANDOM_STRING
               env:
                 GF_FEATURE_TOGGLES_ENABLE: publicDashboards
