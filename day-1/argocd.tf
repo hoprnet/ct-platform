@@ -80,13 +80,13 @@ resource "kubernetes_secret" "argocd" {
 }
 
 resource "helm_release" "argocd" {
-  name             = "argocd"
-  namespace        = "argocd"
-  repository       = "https://argoproj.github.io/argo-helm"
-  chart            = "argo-cd"
-  version          = "5.21.0"
-  atomic           = true
-  cleanup_on_fail  = true
+  name            = "argocd"
+  namespace       = "argocd"
+  repository      = "https://argoproj.github.io/argo-helm"
+  chart           = "argo-cd"
+  version         = "5.21.0"
+  atomic          = true
+  cleanup_on_fail = true
 
   values = [
     file("./config/argocd/values.yaml")

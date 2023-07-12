@@ -1,13 +1,11 @@
-resource "google_service_account" "traefik" {
-  account_id   = "${var.name}-traefik"
-  display_name = "${var.name}-traefik"
-}
+resource "kubernetes_secret" "traefik" {
+  metadata {
+    name      = "oauth-traefik"
+    namespace = "treafik"
+  }
 
-#This traefik service account only need the workload identity user role
-resource "google_service_account_iam_binding" "traefik" {
-  members = [
-    "serviceAccount:${var.google_project}.svc.id.goog[traefik/traefik]"
-  ]
-  role               = "roles/iam.workloadIdentityUser"
-  service_account_id = google_service_account.traefik.name
+  data = {
+    "TRAEFIK_AUTH_GOOGLE_CLIENT_ID"     = var.google_auth_traefik_client_id
+    "TRAEFIK_AUTH_GOOGLE_CLIENT_SECRET" = var.google_auth_traefik_client_secret
+  }
 }

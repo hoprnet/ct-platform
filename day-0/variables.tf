@@ -1,11 +1,13 @@
 variable "google_project" {
   type        = string
   description = "The ID of the GCP project"
+  sensitive   = true
 }
 
 variable "google_region" {
   type        = string
   description = "The default GCP region for resource placement"
+  sensitive   = true
 }
 
 variable "name" {

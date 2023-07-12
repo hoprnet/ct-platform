@@ -10,12 +10,26 @@ Make sure you have:
 - Created a Github account with escalated permissions to create secrets.
 - Created a GCP service account with escalated permissions to create resources. Note: please remove the escalated permissions when done with pipeline steps `day-0` and `day-1` for security reasons.
 - Created a GCP storage bucket for storing Terraform state.
-- Completed the GCP "OAuth consent screen" as it unfortunately can not be automated: https://console.cloud.google.com/apis/credentials/consent. Some comments:
+- Completed the GCP OAuth consent screen as it unfortunately can not be automated: https://console.cloud.google.com/apis/credentials/consent. Some comments:
   - You can use the "Internal" user type if you want just internal users to use the application.
-  - Provide the `TF_VAR_domain` value you just set up in `.env` as the value for "Authorized domains".
+  - Add your actual domain to "Authorized domains".
   - Enable the following scopes:
     - https://www.googleapis.com/auth/userinfo.email
     - https://www.googleapis.com/auth/userinfo.profile
+- Created two (Grafana and Traefik) OAuth client credentials as it unfortunately can not be automated: https://console.cloud.google.com/apis/credentials/oauthclient. Some comments:
+  - You can follow this nice tutorial from Grafana: https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/google/.
+  - Use the "Web application" application type.
+  - Specific for Grafana:
+    - Use "Grafana" as the name.
+    - Add https://grafana.mydomain.com to "Authorized JavaScript origins", replace `mydomain.com` with your actual domain.
+    - Add https://grafana.mydomain.com/login/google to "Authorized redirect URIs", replace `mydomain.com` with your actual domain.
+  - Specific for Traefik:
+    - Use "Traefik" as the name.
+    - Add the following URIs "Authorized redirect URIs", replace `mydomain.com` with your actual domain:
+      - https://alertmanager.mydomain.com/_oauth
+      - https://argocd.mydomain.com/_oauth
+      - https://prometheus.mydomain.com/_oauth
+  - Click "Create" and copy the "Client ID" and "Client secret" and update the [secret variables](#secret-variables).
 - Created a new RSA keypair with no passphrase for ArgoCD to access the Github repo. The public key of this keypair has to be then uploaded to the deploy keys of the repository; the private key has to be Base64-encoded and set as a Github secret variable `ARGOCD_CREDENTIALS_KEY`. You can generate the keypair by running:
 
 ```shell
@@ -30,18 +44,20 @@ We try to keep as little secret variables as possible by design. For the sake of
 - `GOOGLE_PROJECT` = GCP project ID.
 - `GOOGLE_REGION` = GCP project default region.
 - `GOOGLE_BUCKET` = GCP bucket for storing Terraform state.
+- `GOOGLE_AUTH_GRAFANA_CLIENT_ID` = The client ID of the GCP OAuth Grafana client.
+- `GOOGLE_AUTH_GRAFANA_CLIENT_SECRET` = The client secret of the GCP OAuth Grafana client.
+- `GOOGLE_AUTH_TRAEFIK_CLIENT_ID` = The client ID of the GCP OAuth Traefik client.
+- `GOOGLE_AUTH_TRAEFIK_CLIENT_SECRET` = The client secret of the GCP OAuth Traefik client.
 - `ARGOCD_CREDENTIALS_KEY` = Base64-encoded ArgoCD credentials private key from the previously generated keypair.
 
 ### Non-secret variables
 
 For non-secret variables, simply edit/add them in the `.env` file, which gets parsed during pipeline runs, e.g.:
 
-```dotenv
-TF_VAR_name="ct-platform"
-TF_VAR_domain="ctdapp.net"
-TF_VAR_argocd_repo_url="git@github.com:hoprnet/infrastructure.git"
-TF_VAR_argocd_credentials_url="git@github.com:hoprnet"
-```
+- `TF_VAR_name="ct-platform"` = The name used in naming resources.
+- `TF_VAR_domain="ctdapp.net"` = The domain name for the DNS zone and other resources.
+- `TF_VAR_argocd_repo_url="git@github.com:hoprnet/infrastructure.git"` = The URL for the ArgoCD repository.
+- `TF_VAR_argocd_credentials_url="git@github.com:hoprnet"` = The URL for the ArgoCD credentials template.
 
 ## Installation
 

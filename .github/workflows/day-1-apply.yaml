@@ -20,6 +20,10 @@ jobs:
           export GOOGLE_CREDENTIALS=/tmp/credentials.json
           export TF_VAR_google_project="${{ secrets.GOOGLE_PROJECT }}"
           export TF_VAR_google_region="${{ secrets.GOOGLE_REGION }}"
+          export TF_VAR_google_auth_grafana_client_id="${{ secrets.GOOGLE_AUTH_GRAFANA_CLIENT_ID }}"
+          export TF_VAR_google_auth_grafana_client_secret="${{ secrets.GOOGLE_AUTH_GRAFANA_CLIENT_SECRET }}"
+          export TF_VAR_google_auth_traefik_client_id="${{ secrets.GOOGLE_AUTH_TRAEFIK_CLIENT_ID }}"
+          export TF_VAR_google_auth_traefik_client_secret="${{ secrets.GOOGLE_AUTH_TRAEFIK_CLIENT_SECRET }}"
           export TF_VAR_argocd_credentials_key="${{ secrets.ARGOCD_CREDENTIALS_KEY }}"
           gcloud auth activate-service-account --key-file /tmp/credentials.json
           gcloud container clusters get-credentials ${TF_VAR_name} --region ${TF_VAR_google_region} --project ${TF_VAR_google_project}

@@ -1,13 +1,11 @@
-resource "google_service_account" "grafana" {
-  account_id   = "${var.name}-grafana"
-  display_name = "${var.name}-grafana"
-}
+resource "kubernetes_secret" "grafana" {
+  metadata {
+    name      = "oauth-grafana"
+    namespace = "monitoring"
+  }
 
-#This grafana service account only need the workload identity user role
-resource "google_service_account_iam_binding" "grafana" {
-  members = [
-    "serviceAccount:${var.google_project}.svc.id.goog[grafana/grafana]"
-  ]
-  role               = "roles/iam.workloadIdentityUser"
-  service_account_id = google_service_account.grafana.name
+  data = {
+    "GF_AUTH_GOOGLE_CLIENT_ID"     = var.google_auth_grafana_client_id
+    "GF_AUTH_GOOGLE_CLIENT_SECRET" = var.google_auth_grafana_client_secret
+  }
 }
