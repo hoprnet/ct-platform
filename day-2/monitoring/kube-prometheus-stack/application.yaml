@@ -52,19 +52,6 @@ spec:
                       match:
                         severity: null
                       continue: false
-                    - receiver: "telegram"
-                      match:
-                        channels: telegram
-                      continue: true
-                    - receiver: "info"
-                      match:
-                        severity: info
-                    - receiver: "warning"
-                      match:
-                        severity: warning
-                    - receiver: "critical"
-                      match:
-                        severity: critical
                 receivers:
                   - name: "null"
             kubeStateMetrics:
