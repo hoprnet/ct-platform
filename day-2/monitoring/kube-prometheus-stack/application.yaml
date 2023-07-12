@@ -127,7 +127,7 @@ spec:
                   scopes: https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email
                   auth_url: https://accounts.google.com/o/oauth2/auth
                   token_url: https://accounts.google.com/o/oauth2/token
-                  service_account_key_file = /var/run/secrets/kubernetes.io/serviceaccount/token
+                  service_account_key_file: /var/run/secrets/kubernetes.io/serviceaccount/token
               ingress:
                 enabled: true
                 ingressClassName: traefik
