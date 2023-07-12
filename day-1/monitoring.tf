@@ -1,3 +1,9 @@
+resource "kubernetes_namespace" "monitoring" {
+  metadata {
+    name = "monitoring"
+  }
+}
+
 resource "kubernetes_secret" "grafana" {
   metadata {
     name      = "oauth-grafana"
