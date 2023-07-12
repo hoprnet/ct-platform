@@ -18,16 +18,16 @@ spec:
               URL_PATH: /_oauth
               DEFAULT_PROVIDER: google
               LOG_LEVEL: debug
-            PROVIDERS_GOOGLE_CLIENT_ID:
-              valueFrom:
-                secretKeyRef:
-                  name: oauth-traefik
-                  key: TRAEFIK_AUTH_GOOGLE_CLIENT_ID
-            PROVIDERS_GOOGLE_CLIENT_SECRET:
-              valueFrom:
-                secretKeyRef:
-                  name: oauth-traefik
-                  key: TRAEFIK_AUTH_GOOGLE_CLIENT_SECRET
+              PROVIDERS_GOOGLE_CLIENT_ID:
+                valueFrom:
+                  secretKeyRef:
+                    name: oauth-traefik
+                    key: TRAEFIK_AUTH_GOOGLE_CLIENT_ID
+              PROVIDERS_GOOGLE_CLIENT_SECRET:
+                valueFrom:
+                  secretKeyRef:
+                    name: oauth-traefik
+                    key: TRAEFIK_AUTH_GOOGLE_CLIENT_SECRET
   destination:
     server: https://kubernetes.default.svc
     namespace: traefik
