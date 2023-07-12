@@ -1,7 +1,7 @@
 resource "kubernetes_secret" "traefik" {
   metadata {
     name      = "oauth-traefik"
-    namespace = "treafik"
+    namespace = "traefik"
   }
 
   data = {
