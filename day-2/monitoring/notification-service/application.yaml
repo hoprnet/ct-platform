@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/hoprnet/notification-service
     targetRevision: master
-    path: deploy/charts
+    path: charts/notification-service
     plugin:
       env:
         - name: HELM_VALUES
