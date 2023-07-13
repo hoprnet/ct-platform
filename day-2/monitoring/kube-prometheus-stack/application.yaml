@@ -51,9 +51,26 @@ spec:
                     - receiver: "null"
                       match:
                         severity: null
-                      continue: false
+                    - receiver: "info"
+                      match:
+                        severity: info
+                    - receiver: "warning"
+                      match:
+                        severity: warning
+                    - receiver: "critical"
+                      match:
+                        severity: critical
                 receivers:
                   - name: "null"
+                  - name: "info"
+                    webhook_configs:
+                      - url: "http://notification-service.monitoring:8080/alertmanager/room/%21RRhkElwEaVKIGKVnwS:hoprnet.io"
+                  - name: "warning"
+                    webhook_configs:
+                      - url: "http://notification-service.monitoring:8080/alertmanager/room/%21fZlVgaigqrPOAyGxKe:hoprnet.io"
+                  - name: "critical"
+                    webhook_configs:
+                      - url: "http://notification-service.monitoring:8080/alertmanager/room/%21JUomOkHgBTolTrSlsY:hoprnet.io"
             kubeStateMetrics:
               enabled: true
             nodeExporter:

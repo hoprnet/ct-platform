@@ -103,5 +103,5 @@ your-another-key=your-another-value
 EOF
 
 kubectl create secret generic -n $NAMESPACE $SECRET_NAME --from-env-file /tmp/env -oyaml --dry-run=client > /tmp/${SECRET_NAME}-secret.yaml
-cat /tmp/${SECRET_NAME}.yaml | kubeseal --controller-namespace sealed-secrets --controller-name sealed-secrets | tee /tmp/${SECRET_NAME}-sealed-secret.yaml
+cat /tmp/${SECRET_NAME}-secret.yaml | kubeseal --controller-namespace sealed-secrets --controller-name sealed-secrets -oyaml | tee /tmp/${SECRET_NAME}-sealed-secret.yaml
 ```
