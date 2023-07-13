@@ -105,3 +105,11 @@ EOF
 kubectl create secret generic -n $NAMESPACE $SECRET_NAME --from-env-file /tmp/env -oyaml --dry-run=client > /tmp/${SECRET_NAME}-secret.yaml
 cat /tmp/${SECRET_NAME}-secret.yaml | kubeseal --controller-namespace sealed-secrets --controller-name sealed-secrets -oyaml | tee /tmp/${SECRET_NAME}-sealed-secret.yaml
 ```
+
+### Alertmanager
+
+To send a test alert with Alertmanager run:
+
+```shell
+kubectl exec -n monitoring alertmanager-kube-prometheus-stack-alertmanager-0 -- amtool alert add --alertmanager.url http://kube-prometheus-stack-alertmanager.monitoring:9093 my-alert-critical severity=critical
+```
