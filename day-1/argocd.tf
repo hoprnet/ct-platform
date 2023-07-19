@@ -160,8 +160,6 @@ spec:
       env:
         - name: "DIRECTORY_RECURSE"
           value: "true"
-        - name: "DIRECTORY_EXCLUDE"
-          value: "{definitions/*}"
 
   destination:
     server: https://kubernetes.default.svc
