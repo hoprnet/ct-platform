@@ -1,0 +1,14 @@
+apiVersion: rabbitmq.com/v1beta1
+kind: Policy
+metadata:
+  name: ha-policy
+spec:
+  name: high-availability
+  vhost: "/"
+  pattern: ""
+  applyTo: "all"
+  definition:
+    ha-mode: all
+    ha-sync-mode: automatic
+  rabbitmqClusterReference:
+    name: rabbitmq-ha-cluster

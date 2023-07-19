@@ -1,0 +1,9 @@
+apiVersion: v2
+name: rabbitmq-app
+description: RabbitMQ Application
+type: application
+version: 0.1.0
+dependencies:
+  - name: rabbitmq-cluster-operator
+    version: 3.3.1
+    repository: oci://registry-1.docker.io/bitnamicharts

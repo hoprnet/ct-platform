@@ -1,0 +1,36 @@
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
+metadata:
+  name: rabbitmq-ha-cluster
+spec:
+# https://github.com/rabbitmq/cluster-operator/blob/main/docs/examples/production-ready/rabbitmq.yaml
+  replicas: 2
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: 500m
+      memory: 1Gi
+  secretBackend:
+    externalSecret: 
+      name: rabbitmq-credentials-admin
+  rabbitmq:
+    additionalConfig: |
+      log.console.level = info
+      default_user_tags.administrator = true
+  persistence:
+    storageClassName: main
+    storage: "5Gi"
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+            - key: app.kubernetes.io/name
+              operator: In
+              values:
+              - rabbitmq-ha-cluster
+        topologyKey: kubernetes.io/hostname
+  service:
+    type: ClusterIP
