@@ -25,7 +25,9 @@ spec:
     - namespace: staging-*
       server: https://kubernetes.default.svc
       name: in-cluster
-
+    - namespace: rabbitmq
+      server: https://kubernetes.default.svc
+      name: in-cluster
   # Deny all cluster-scoped resources from being created, except for Namespace
   clusterResourceWhitelist:
     - group: "*"
