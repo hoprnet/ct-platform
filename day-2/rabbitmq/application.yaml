@@ -13,7 +13,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: day-2-definitions/rabbitmq-app
+    path: day-2-definitions/rabbitmq
     repoURL: https://github.com/hoprnet/ct-platform
     targetRevision: feature/rabbitmq
     helm:
