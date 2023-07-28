@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: production
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-forward-auth@kubernetescrd
+  labels:
+    app.kubernetes.io/instance: rabbitmq
+    app.kubernetes.io/name: rabbitmq
+  name: rabbitmq
+  namespace: rabbitmq
+spec:
+  ingressClassName: traefik
+  rules:
+  - host: {{ .Values.hostname }}
+    http:
+      paths:
+      - backend:
+          service:
+            name: rabbitmq-ha-cluster
+            port:
+              name: management
+        path: /
+        pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - {{ .Values.hostname }}
+    secretName: rabbitmq-cert
