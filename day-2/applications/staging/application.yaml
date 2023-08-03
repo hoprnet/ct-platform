@@ -8,7 +8,7 @@ spec:
   source:
     #TODO - do not hardcode
     repoURL: https://github.com/hoprnet/ct-applications
-    targetRevision: feature/rabbitmq
+    targetRevision: main
     path: staging
     plugin:
       env:

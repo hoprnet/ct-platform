@@ -15,7 +15,7 @@ spec:
   source:
     path: day-2-definitions/rabbitmq
     repoURL: https://github.com/hoprnet/ct-platform
-    targetRevision: feature/rabbitmq
+    targetRevision: main
     helm:
       releaseName: rabbitmq
       valueFiles:
