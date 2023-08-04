@@ -16,7 +16,8 @@ resource "google_project_iam_binding" "storage" {
   project = var.google_project #Not inferred from the provider
 
   members = [
-    "serviceAccount:${google_service_account.loki.email}"
+    "serviceAccount:${google_service_account.loki.email}",
+    "serviceAccount:${google_service_account.ct.email}"
   ]
 
   role = "roles/storage.objectAdmin"
