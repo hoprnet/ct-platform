@@ -116,6 +116,7 @@ kubectl exec -n monitoring alertmanager-kube-prometheus-stack-alertmanager-0 -- 
 
 ### Postgres Database
 
+The certificates files are uploaded to Bitwarden under the name `Postgres - CT dApp`
 The postgres database has been created by Terraform and the connection string is the following:
 ````
 export PGHOST=$(gcloud sql instances describe staging --format=json | jq -r '.ipAddresses[0].ipAddress')

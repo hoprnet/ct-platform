@@ -140,34 +140,34 @@ resource "google_sql_user" "ctdapp" {
 # Store postgres password in terraform state
 output "postgres_password_postgres" {
      description = "Postgres password for user postgres"
-     value       = [for index, environment_name in var.environment_names : "[{\"${environment_name}\":\"${random_password.postgres[index].result}\"]"]
+     value       = [for index, environment_name in var.environment_names : "{\"${environment_name}\":\"${random_password.postgres[index].result}\"}"]
      sensitive   = true
 }
 
 # Store ctdapp password in terraform state
 output "postgres_password_ctdapp" {
      description = "Postgres password for user ctdapp"
-     value       = [for index, environment_name in var.environment_names : "[{\"${environment_name}\":\"${random_password.ctdapp[index].result}\"]"]
+     value       = [for index, environment_name in var.environment_names : "{\"${environment_name}\":\"${random_password.ctdapp[index].result}\"}"]
      sensitive   = true
 }
 
 # Stores a client certificate key in terraform state
 output "postgres_client_cert_key" {
      description = "Client certificate private key"
-     value       = [for index, environment_name in var.environment_names : "[{\"${environment_name}\":\"${google_sql_ssl_cert.client_cert[index].private_key}\"]"]
+     value       = [for index, environment_name in var.environment_names : "# ${environment_name}\n${google_sql_ssl_cert.client_cert[index].private_key}"]
      sensitive   = true
 }
 
 # Stores a client certificate in terraform state
 output "postgres_client_cert" {
      description = "Client certificate"
-     value       = [for index, environment_name in var.environment_names : "[{\"${environment_name}\":\"${google_sql_ssl_cert.client_cert[index].cert}\"]"]
+     value       = [for index, environment_name in var.environment_names : "# ${environment_name}\n${google_sql_ssl_cert.client_cert[index].cert}"]
      sensitive   = true
 }
 
 # Stores a CA certificate key in terraform state
 output "postgres_ca_cert" {
      description = "Root CA certificate"
-     value       = [for index, environment_name in var.environment_names : "[{\"${environment_name}\":\"${google_sql_ssl_cert.client_cert[index].server_ca_cert}\"]"]
+     value       = [for index, environment_name in var.environment_names : "# ${environment_name}\n${google_sql_ssl_cert.client_cert[index].server_ca_cert}"]
      sensitive   = true
 }
