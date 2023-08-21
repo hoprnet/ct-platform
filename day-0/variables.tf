@@ -39,8 +39,3 @@ variable "cpu_max" {
   description = "Maximum amount of CPU cores for the whole cluster"
 }
 
-variable "environment_names" {
-  description = "List of environment names"
-  type        = list(string)
-  default     = ["staging"]
-}

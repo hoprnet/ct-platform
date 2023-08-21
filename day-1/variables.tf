@@ -59,3 +59,9 @@ variable "google_auth_traefik_client_secret" {
   description = "The client secret of the GCP OAuth Traefik client"
   sensitive   = true
 }
+
+variable "environment_names" {
+  description = "List of environment names"
+  type        = list(string)
+  default     = ["staging1"]
+}

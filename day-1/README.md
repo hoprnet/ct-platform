@@ -5,7 +5,7 @@ Basic Terraform commands
 ```
 export $(grep -v '^#' .env | xargs)
 export $(grep -v '^#' .envrc | xargs)
-cd day-0
+cd day-1
 terraform init -backend-config="bucket=ct-platform-terraform"
 terraform plan -out=tfplan
 terraform apply tfplan
