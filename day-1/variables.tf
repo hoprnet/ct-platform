@@ -65,3 +65,9 @@ variable "environment_names" {
   type        = list(string)
   default     = ["staging"]
 }
+
+variable "dbname" {
+  type        = string
+  description = "The database name"
+  default     = "ctdapp"
+}

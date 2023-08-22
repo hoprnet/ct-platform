@@ -37,12 +37,12 @@ resource "google_secret_manager_secret_version" "postgres_secret_version" {
 # Create the GCP Secret empty for ctdapp user
 resource "google_secret_manager_secret" "ctdapp" {
   count     = length(var.environment_names)
-  secret_id = "postgres_${var.environment_names[count.index]}_ctdapp"
+  secret_id = "postgres_${var.environment_names[count.index]}_${var.dbname}"
 
   labels = {
     service  = "cloud_sql"
     database = var.environment_names[count.index]
-    user     = "ctdapp"
+    user     = var.dbname
   }
 
   replication {
@@ -116,7 +116,7 @@ resource "google_sql_ssl_cert" "client_cert" {
 # Create ctdapp Database
 resource "google_sql_database" "ctdapp" {
   count           = length(var.environment_names)
-  name            = "ctdapp"
+  name            = var.dbname
   instance        = google_sql_database_instance.postgres[count.index].name
   charset         = "UTF8"
   deletion_policy = "ABANDON"
@@ -126,7 +126,7 @@ resource "google_sql_database" "ctdapp" {
 resource "google_sql_user" "ctdapp" {
   count           = length(var.environment_names)
   instance        = google_sql_database_instance.postgres[count.index].name
-  name            = "ctdapp"
+  name            = var.dbname
   password        = random_password.ctdapp[count.index].result
   type            = "BUILT_IN"
   deletion_policy = "ABANDON"
