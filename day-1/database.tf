@@ -16,7 +16,6 @@ resource "google_secret_manager_secret" "postgres" {
       }
     }
   }
-  depends_on = [google_project_service.secretmanager]
 }
 
 # Generates random password data for use as postgres user
@@ -53,7 +52,6 @@ resource "google_secret_manager_secret" "ctdapp" {
       }
     }
   }
-  depends_on = [google_project_service.secretmanager]
 }
 
 # Generates random password data for use as ctdapp user
@@ -106,7 +104,6 @@ resource "google_sql_database_instance" "postgres" {
     }
   }
   deletion_protection = "true"
-  depends_on          = [google_project_service.sqladmin]
 }
 
 # Creates a client certificate for establishing SSL connections

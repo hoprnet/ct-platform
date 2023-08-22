@@ -2,6 +2,8 @@ resource "kubernetes_namespace" "traefik" {
   metadata {
     name = "traefik"
   }
+  wait_for_default_service_account = false
+  timeouts {}
 }
 
 resource "kubernetes_secret" "traefik" {

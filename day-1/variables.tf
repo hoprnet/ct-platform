@@ -63,5 +63,5 @@ variable "google_auth_traefik_client_secret" {
 variable "environment_names" {
   description = "List of environment names"
   type        = list(string)
-  default     = ["staging1"]
+  default     = ["staging"]
 }
