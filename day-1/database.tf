@@ -158,7 +158,7 @@ resource "google_secret_manager_secret_version" "client_cert_key" {
 
 resource "google_secret_manager_secret" "client_cert" {
   count     = length(var.environment_names)
-  secret_id = "postgres_${var.environment_names[count.index]}_client_cert_key"
+  secret_id = "postgres_${var.environment_names[count.index]}_client_cert"
 
   labels = {
     service  = "cloud_sql"
@@ -182,7 +182,7 @@ resource "google_secret_manager_secret_version" "client_cert" {
 
 resource "google_secret_manager_secret" "server_cert" {
   count     = length(var.environment_names)
-  secret_id = "postgres_${var.environment_names[count.index]}_client_cert_key"
+  secret_id = "postgres_${var.environment_names[count.index]}_server_cert"
 
   labels = {
     service  = "cloud_sql"
