@@ -113,3 +113,21 @@ To send a test alert with Alertmanager run:
 ```shell
 kubectl exec -n monitoring alertmanager-kube-prometheus-stack-alertmanager-0 -- amtool alert add --alertmanager.url http://kube-prometheus-stack-alertmanager.monitoring:9093 my-alert-critical severity=critical
 ```
+
+### Postgres Database
+
+The certificates files are uploaded to Bitwarden under the name `Postgres - CT dApp`
+The postgres database has been created by Terraform and the connection string is the following:
+````
+export PGHOST=$(gcloud sql instances describe staging --format=json | jq -r '.ipAddresses[0].ipAddress')
+export PGPORT=5432
+export PGUSER=ctdapp
+export PGPASSWORD=$(gcloud secrets versions access 1 --secret=postgres_staging_ctdapp)
+export PGDATABASE=ctdapp
+export PGSSLCERT=postgres-staging-client-cert.pem
+export PGSSLKEY=postgres-staging-client-key.pem
+export PGSSLROOTCERT=postgres-staging-ca.pem
+export PGSSLMODE=verify-ca
+psql
+
+````

@@ -1,0 +1,17 @@
+# Get from Bitwarden by name `Terraform CT dApp Service Account`
+GOOGLE_CREDENTIALS=./path/to/ctdapp-service-account.json
+
+# Get from GCP Console
+TF_VAR_google_project=
+
+# Get from GCP Console https://console.cloud.google.com/apis/credentials
+TF_VAR_google_auth_grafana_client_id=
+TF_VAR_google_auth_grafana_client_secret=
+TF_VAR_google_auth_traefik_client_id=
+TF_VAR_google_auth_traefik_client_secret=
+
+# Base64 encoded form of the SSH private Key to access Github from Argocd
+# Get from Bitwarden by name `Terraform CT dApp Service Account`
+TF_VAR_argocd_credentials_key=
+
+

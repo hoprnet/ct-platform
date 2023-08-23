@@ -4,3 +4,9 @@
 terraform.*
 .envrc
 tmp
+**/*service-account.json
+**/*.key
+**/*.pem
+**/tfplan*
+
+

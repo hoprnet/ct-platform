@@ -1,8 +1,6 @@
 resource "google_container_cluster" "main" {
   name = var.name
 
-  location = var.google_region
-
   # We can't create a cluster with no node pool defined, but we want to only use
   # separately managed node pools. So we create the smallest possible default
   # node pool and immediately delete it.
@@ -111,7 +109,6 @@ resource "google_container_cluster" "main" {
 
 resource "google_container_node_pool" "main" {
   name       = var.name
-  location   = var.google_region
   cluster    = google_container_cluster.main.name
   node_count = 1 #Node count per zone
 
