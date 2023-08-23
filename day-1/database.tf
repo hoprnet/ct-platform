@@ -132,6 +132,78 @@ resource "google_sql_user" "ctdapp" {
   deletion_policy = "ABANDON"
 }
 
+resource "google_secret_manager_secret" "client_cert_key" {
+  count     = length(var.environment_names)
+  secret_id = "postgres_${var.environment_names[count.index]}_client_cert_key"
+
+  labels = {
+    service  = "cloud_sql"
+    database = var.environment_names[count.index]
+  }
+
+  replication {
+    user_managed {
+      replicas {
+        location = var.google_region
+      }
+    }
+  }
+}
+
+resource "google_secret_manager_secret_version" "client_cert_key" {
+  count       = length(var.environment_names)
+  secret      = google_secret_manager_secret.client_cert_key[count.index].id
+  secret_data = google_sql_ssl_cert.client_cert[count.index].private_key
+}
+
+resource "google_secret_manager_secret" "client_cert" {
+  count     = length(var.environment_names)
+  secret_id = "postgres_${var.environment_names[count.index]}_client_cert_key"
+
+  labels = {
+    service  = "cloud_sql"
+    database = var.environment_names[count.index]
+  }
+
+  replication {
+    user_managed {
+      replicas {
+        location = var.google_region
+      }
+    }
+  }
+}
+
+resource "google_secret_manager_secret_version" "client_cert" {
+  count       = length(var.environment_names)
+  secret      = google_secret_manager_secret.client_cert[count.index].id
+  secret_data = google_sql_ssl_cert.client_cert[count.index].cert
+}
+
+resource "google_secret_manager_secret" "server_cert" {
+  count     = length(var.environment_names)
+  secret_id = "postgres_${var.environment_names[count.index]}_client_cert_key"
+
+  labels = {
+    service  = "cloud_sql"
+    database = var.environment_names[count.index]
+  }
+
+  replication {
+    user_managed {
+      replicas {
+        location = var.google_region
+      }
+    }
+  }
+}
+
+resource "google_secret_manager_secret_version" "server_cert" {
+  count       = length(var.environment_names)
+  secret      = google_secret_manager_secret.server_cert[count.index].id
+  secret_data = google_sql_ssl_cert.client_cert[count.index].server_ca_cert
+}
+
 ######### Outputs #########
 
 # Store postgres password in terraform state
