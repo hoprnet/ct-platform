@@ -1,3 +1,6 @@
+> [!WARNING]  
+> day-1 setup has to be inspected to find out the reason why so many day-1 resources are about to be replaced! Do not run day-1 pipeline!
+
 # ct-platform
 
 This project aims to provide you with a fully-automated Kubernetes platform with focus on monitoring, security, accessability, and ease-of-use.
