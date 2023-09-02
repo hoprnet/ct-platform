@@ -54,6 +54,7 @@ jobs:
       - name: Initialize and apply Terraform resources
         id: initialize-and-apply
         run: |
+          exit 0
           export $(grep -v '^#' .env | xargs)
           echo "${{ secrets.GOOGLE_CREDENTIALS }}" | base64 -d > /tmp/credentials.json
           export GOOGLE_CREDENTIALS=/tmp/credentials.json
