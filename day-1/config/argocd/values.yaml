@@ -16,6 +16,7 @@ configs:
     application.namespaces: "*"
     server.insecure: true
 controller:
+repoServer:
   extraContainers:
     - name: argocd-sugar
       command: ["/var/run/argocd/argocd-cmp-server"]
