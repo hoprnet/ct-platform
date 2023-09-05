@@ -113,7 +113,7 @@ resource "google_sql_database_instance" "postgres" {
       hour = 1
     }
   }
-  deletion_protection = "false"
+  deletion_protection = false
 }
 
 # Creates a client certificate for establishing SSL connections
