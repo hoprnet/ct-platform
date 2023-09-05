@@ -103,7 +103,7 @@ resource "google_secret_manager_secret" "postgres_cert_private_key" {
 resource "google_secret_manager_secret_version" "postgres_cert_private_key" {
   count       = length(var.environment_names)
   secret      = google_secret_manager_secret.postgres_cert_private_key[count.index].id
-  secret_data = google_sql_ssl_cert.ctdapp[index].private_key
+  secret_data = google_sql_ssl_cert.ctdapp[count.index].private_key
 }
 
 # Postgres SSL cert cert resources
@@ -129,7 +129,7 @@ resource "google_secret_manager_secret" "postgres_cert_cert" {
 resource "google_secret_manager_secret_version" "postgres_cert_cert" {
   count       = length(var.environment_names)
   secret      = google_secret_manager_secret.postgres_cert_cert[count.index].id
-  secret_data = google_sql_ssl_cert.ctdapp[index].cert
+  secret_data = google_sql_ssl_cert.ctdapp[count.index].cert
 }
 
 # Postgres SSL cert server CA cert resources
@@ -155,7 +155,7 @@ resource "google_secret_manager_secret" "postgres_cert_server_ca_cert" {
 resource "google_secret_manager_secret_version" "postgres_cert_server_ca_cert" {
   count       = length(var.environment_names)
   secret      = google_secret_manager_secret.postgres_cert_server_ca_cert[count.index].id
-  secret_data = google_sql_ssl_cert.ctdapp[index].server_ca_cert
+  secret_data = google_sql_ssl_cert.ctdapp[count.index].server_ca_cert
 }
 
 # Creates the Database Engine instance Postgres 15
