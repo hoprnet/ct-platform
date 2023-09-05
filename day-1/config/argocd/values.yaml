@@ -15,7 +15,6 @@ configs:
   params:
     application.namespaces: "*"
     server.insecure: true
-controller:
 repoServer:
   extraContainers:
     - name: argocd-sugar
