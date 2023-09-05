@@ -1,11 +1,4 @@
 server:
-  resources:
-    limits:
-      cpu: 200m
-      memory: 128Mi
-    requests:
-      cpu: 100m
-      memory: 64Mi
   ingress:
     enabled: true
     ingressClassName: traefik
@@ -23,45 +16,6 @@ configs:
     application.namespaces: "*"
     server.insecure: true
 controller:
-  resources:
-    limits:
-      cpu: 500m
-      memory: 1024Mi
-    requests:
-      cpu: 250m
-      memory: 512Mi
-redis:
-  resources:
-    limits:
-      cpu: 200m
-      memory: 128Mi
-    requests:
-      cpu: 100m
-      memory: 64Mi
-applicationSet:
-  resources:
-     limits:
-       cpu: 100m
-       memory: 64Mi
-     requests:
-       cpu: 100m
-       memory: 64Mi
-notifications:
-  resources:
-     limits:
-       cpu: 100m
-       memory: 64Mi
-     requests:
-       cpu: 100m
-       memory: 64Mi
-repoServer:
-  resources:
-    limits:
-      cpu: 100m
-      memory: 512Mi
-    requests:
-      cpu: 100m
-      memory: 512Mi
   extraContainers:
     - name: argocd-sugar
       command: ["/var/run/argocd/argocd-cmp-server"]
