@@ -74,9 +74,7 @@ resource "helm_release" "argocd" {
   }
 
   depends_on = [
-    kubernetes_secret.argocd,
-    kubernetes_limit_range.argocd,
-    kubernetes_resource_quota.argocd
+    kubernetes_secret.argocd
   ]
 }
 
