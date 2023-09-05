@@ -8,50 +8,6 @@ resource "kubernetes_namespace" "argocd" {
   ]
 }
 
-resource "kubernetes_limit_range" "argocd" {
-  metadata {
-    name      = "argocd"
-    namespace = kubernetes_namespace.argocd.id
-  }
-
-  spec {
-    limit {
-      type = "Container"
-      default = {
-        cpu    = "100m"
-        memory = "128Mi"
-      }
-      default_request = {
-        cpu    = "10m"
-        memory = "32Mi"
-      }
-    }
-    limit {
-      type = "PersistentVolumeClaim"
-      max = {
-        storage = "10G"
-      }
-    }
-  }
-}
-
-resource "kubernetes_resource_quota" "argocd" {
-  metadata {
-    name      = "argocd"
-    namespace = kubernetes_namespace.argocd.id
-  }
-
-  spec {
-    hard = {
-      "limits.cpu"       = "1500m"
-      "limits.memory"    = "2Gi"
-      "requests.cpu"     = "1500m"
-      "requests.memory"  = "2Gi"
-      "requests.storage" = "10Gi"
-    }
-  }
-}
-
 resource "random_password" "main" {
   length      = 16
   special     = false
