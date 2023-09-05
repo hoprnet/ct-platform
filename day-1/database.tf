@@ -80,6 +80,84 @@ resource "google_secret_manager_secret_version" "ctdapp_secret_version" {
   secret_data = random_password.ctdapp[count.index].result
 }
 
+# Postgres SSL cert private key resources
+resource "google_secret_manager_secret" "postgres_cert_private_key" {
+  count     = length(var.environment_names)
+  secret_id = "postgres_cert_private_key_${var.environment_names[count.index]}_${var.dbname}"
+
+  labels = {
+    service  = "cloud_sql"
+    database = var.environment_names[count.index]
+    user     = var.dbname
+  }
+
+  replication {
+    user_managed {
+      replicas {
+        location = var.google_region
+      }
+    }
+  }
+}
+
+resource "google_secret_manager_secret_version" "postgres_cert_private_key" {
+  count       = length(var.environment_names)
+  secret      = google_secret_manager_secret.postgres_cert_private_key[count.index].id
+  secret_data = google_sql_ssl_cert.ctdapp[index].private_key
+}
+
+# Postgres SSL cert cert resources
+resource "google_secret_manager_secret" "postgres_cert_cert" {
+  count     = length(var.environment_names)
+  secret_id = "postgres_cert_cert_${var.environment_names[count.index]}_${var.dbname}"
+
+  labels = {
+    service  = "cloud_sql"
+    database = var.environment_names[count.index]
+    user     = var.dbname
+  }
+
+  replication {
+    user_managed {
+      replicas {
+        location = var.google_region
+      }
+    }
+  }
+}
+
+resource "google_secret_manager_secret_version" "postgres_cert_cert" {
+  count       = length(var.environment_names)
+  secret      = google_secret_manager_secret.postgres_cert_cert[count.index].id
+  secret_data = google_sql_ssl_cert.ctdapp[index].cert
+}
+
+# Postgres SSL cert server CA cert resources
+resource "google_secret_manager_secret" "postgres_cert_server_ca_cert" {
+  count     = length(var.environment_names)
+  secret_id = "postgres_cert_server_ca_cert_${var.environment_names[count.index]}_${var.dbname}"
+
+  labels = {
+    service  = "cloud_sql"
+    database = var.environment_names[count.index]
+    user     = var.dbname
+  }
+
+  replication {
+    user_managed {
+      replicas {
+        location = var.google_region
+      }
+    }
+  }
+}
+
+resource "google_secret_manager_secret_version" "postgres_cert_server_ca_cert" {
+  count       = length(var.environment_names)
+  secret      = google_secret_manager_secret.postgres_cert_server_ca_cert[count.index].id
+  secret_data = google_sql_ssl_cert.ctdapp[index].server_ca_cert
+}
+
 # Creates the Database Engine instance Postgres 15
 resource "google_sql_database_instance" "postgres" {
   count            = length(var.environment_names)
@@ -117,7 +195,7 @@ resource "google_sql_database_instance" "postgres" {
 }
 
 # Creates a client certificate for establishing SSL connections
-resource "google_sql_ssl_cert" "client_cert" {
+resource "google_sql_ssl_cert" "ctdapp" {
   count       = length(var.environment_names)
   common_name = var.environment_names[count.index]
   instance    = google_sql_database_instance.postgres[count.index].name
@@ -161,20 +239,20 @@ output "postgres_password_ctdapp" {
 # Stores a client certificate key in terraform state
 output "postgres_client_cert_key" {
   description = "Client certificate private key"
-  value       = [for index, environment_name in var.environment_names : "# ${environment_name}\n${google_sql_ssl_cert.client_cert[index].private_key}"]
+  value       = [for index, environment_name in var.environment_names : "# ${environment_name}\n${google_sql_ssl_cert.ctdapp[index].private_key}"]
   sensitive   = true
 }
 
 # Stores a client certificate in terraform state
 output "postgres_client_cert" {
   description = "Client certificate"
-  value       = [for index, environment_name in var.environment_names : "# ${environment_name}\n${google_sql_ssl_cert.client_cert[index].cert}"]
+  value       = [for index, environment_name in var.environment_names : "# ${environment_name}\n${google_sql_ssl_cert.ctdapp[index].cert}"]
   sensitive   = true
 }
 
 # Stores a CA certificate key in terraform state
 output "postgres_ca_cert" {
   description = "Root CA certificate"
-  value       = [for index, environment_name in var.environment_names : "# ${environment_name}\n${google_sql_ssl_cert.client_cert[index].server_ca_cert}"]
+  value       = [for index, environment_name in var.environment_names : "# ${environment_name}\n${google_sql_ssl_cert.ctdapp[index].server_ca_cert}"]
   sensitive   = true
 }
