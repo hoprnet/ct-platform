@@ -25,6 +25,11 @@ resource "random_password" "postgres" {
   special     = false
   min_numeric = 4
   min_upper   = 4
+
+  keepers = {
+    #Fix so password changes only when changing the project
+    "project" = var.google_project
+  }
 }
 
 # Store postgres password in GCP Secret
@@ -61,6 +66,11 @@ resource "random_password" "ctdapp" {
   special     = false
   min_numeric = 4
   min_upper   = 4
+
+  keepers = {
+    #Fix so password changes only when changing the project
+    "project" = var.google_project
+  }
 }
 
 # Store ctdapp password in GCP Secret
@@ -103,7 +113,7 @@ resource "google_sql_database_instance" "postgres" {
       hour = 1
     }
   }
-  deletion_protection = "true"
+  deletion_protection = "false"
 }
 
 # Creates a client certificate for establishing SSL connections
