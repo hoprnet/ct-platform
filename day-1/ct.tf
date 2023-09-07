@@ -6,7 +6,7 @@ resource "google_service_account" "ct" {
 
 resource "google_service_account_iam_binding" "staging" {
   members = [
-    "serviceAccount:${var.google_project}.svc.id.goog[staging/economic-handler]"
+    "serviceAccount:${var.google_project}.svc.id.goog[staging/staging-economic-handler]"
   ]
   role               = "roles/iam.workloadIdentityUser"
   service_account_id = google_service_account.ct.name
@@ -14,7 +14,7 @@ resource "google_service_account_iam_binding" "staging" {
 
 resource "google_service_account_iam_binding" "production" {
   members = [
-    "serviceAccount:${var.google_project}.svc.id.goog[production/economic-handler]"
+    "serviceAccount:${var.google_project}.svc.id.goog[production/production-economic-handler]"
   ]
   role               = "roles/iam.workloadIdentityUser"
   service_account_id = google_service_account.ct.name
