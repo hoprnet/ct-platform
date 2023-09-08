@@ -17,7 +17,8 @@ resource "google_project_iam_binding" "storage" {
 
   members = [
     "serviceAccount:${google_service_account.loki.email}",
-    "serviceAccount:${google_service_account.ct.email}",
+    "serviceAccount:${google_service_account.ct_staging.email}",
+    "serviceAccount:${google_service_account.ct_production.email}",
   ]
 
   role = "roles/storage.objectAdmin"
