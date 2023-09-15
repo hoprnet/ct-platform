@@ -8,5 +8,5 @@ tmp
 **/*.key
 **/*.pem
 **/tfplan*
-
+credentials.json
 
