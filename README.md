@@ -88,7 +88,7 @@ export GOOGLE_APPLICATION_CREDENTIALS=${PWD}/credentials.json
 export TF_VAR_google_project="ctdapp-391309"
 export TF_VAR_google_region="europe-west6"
 
-terraform init -backend-config="bucket=ct-platform-terraform "
+terraform init -backend-config="bucket=ct-platform-terraform"
 terraform plan
 ```
 
