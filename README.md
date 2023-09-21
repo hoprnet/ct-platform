@@ -43,7 +43,7 @@ ssh-keygen -b 2048 -t rsa -f /tmp/id_rsa -q -N "" -C ct-platform
 
 We try to keep as little secret variables as possible by design. For the sake of convenience, define the following secrets in your Github secrets section:
 
-- `GOOGLE_CREDENTIALS` = Base64-encoded GCP service account credentials.
+- `GOOGLE_CREDENTIALS` = Base64-encoded GCP service account credentials. The values are also stored in Bitwarden (https://vault.bitwarden.com/#/vault?collectionId=f01ca6b8-222e-4eeb-883b-b0310095843e) under the secret `Terraform Service Account`.
 - `GOOGLE_PROJECT` = GCP project ID.
 - `GOOGLE_REGION` = GCP project default region.
 - `GOOGLE_BUCKET` = GCP bucket for storing Terraform state.
@@ -51,7 +51,7 @@ We try to keep as little secret variables as possible by design. For the sake of
 - `GOOGLE_AUTH_GRAFANA_CLIENT_SECRET` = The client secret of the GCP OAuth Grafana client.
 - `GOOGLE_AUTH_TRAEFIK_CLIENT_ID` = The client ID of the GCP OAuth Traefik client.
 - `GOOGLE_AUTH_TRAEFIK_CLIENT_SECRET` = The client secret of the GCP OAuth Traefik client.
-- `ARGOCD_CREDENTIALS_KEY` = Base64-encoded ArgoCD credentials private key from the previously generated keypair.
+- `ARGOCD_CREDENTIALS_KEY` = Base64-encoded ArgoCD credentials private key from the previously generated keypair. The values are also stored in Bitwarden (https://vault.bitwarden.com/#/vault?collectionId=f01ca6b8-222e-4eeb-883b-b0310095843e) under the secret `Terraform Service Account`.
 
 ### Non-secret variables
 
@@ -64,6 +64,8 @@ For non-secret variables, simply edit/add them in the `.env` file, which gets pa
 
 ## Installation
 
+### Github
+
 Run the `day-0-apply` workflow in Github to install `day-0` resources such as:
 - GKE Kubernetes cluster and node pools.
 - IAM service accounts and bindings for the Kubernetes cluster.
@@ -72,6 +74,23 @@ Run the `day-0-apply` workflow in Github to install `day-0` resources such as:
 After successful completion of `day-0-apply`, run the `day-1-apply` workflow in Github to install `day-1` resources such as:
 - ArgoCD helm chart and the initial ArgoCD app-of-apps.
 - IAM service accounts and bindings for `day-2` applications, e.g. `cert-manager`, `external-dns`, etc.
+
+### Local
+
+To run Terraform locally, change into the day you want to run, generate new service account credentials or re-use existing ones, export some env variables and initialize the backend config with the specific bucket:
+
+```shell
+cd day-0 #TODO - change this to the day you want to run
+
+gcloud iam service-accounts keys create credentials.json --iam-account ctdapp@ctdapp-391309.iam.gserviceaccount.com 
+
+export GOOGLE_APPLICATION_CREDENTIALS=${PWD}/credentials.json
+export TF_VAR_google_project="ctdapp-391309"
+export TF_VAR_google_region="europe-west6"
+
+terraform init -backend-config="bucket=ct-platform-terraform"
+terraform plan
+```
 
 ## Uninstallation
 
