@@ -64,13 +64,13 @@ spec:
                   - name: "null"
                   - name: "info"
                     webhook_configs:
-                      - url: "http://notification-service.monitoring:8080/alertmanager/room/%21RRhkElwEaVKIGKVnwS:hoprnet.io"
+                      - url: "http://notification-service.monitoring:8080/alertmanager/room/%21deTqxoWopgAlLQjrJJ:hoprnet.io"
                   - name: "warning"
                     webhook_configs:
-                      - url: "http://notification-service.monitoring:8080/alertmanager/room/%21fZlVgaigqrPOAyGxKe:hoprnet.io"
+                      - url: "http://notification-service.monitoring:8080/alertmanager/room/%21deTqxoWopgAlLQjrJJ:hoprnet.io"
                   - name: "critical"
                     webhook_configs:
-                      - url: "http://notification-service.monitoring:8080/alertmanager/room/%21JUomOkHgBTolTrSlsY:hoprnet.io"
+                      - url: "http://notification-service.monitoring:8080/alertmanager/room/%21deTqxoWopgAlLQjrJJ:hoprnet.io"
             kubeStateMetrics:
               enabled: true
             nodeExporter:
