@@ -43,7 +43,7 @@ ssh-keygen -b 2048 -t rsa -f /tmp/id_rsa -q -N "" -C ct-platform
 
 We try to keep as little secret variables as possible by design. For the sake of convenience, define the following secrets in your Github secrets section:
 
-- `GOOGLE_CREDENTIALS` = Base64-encoded GCP service account credentials.
+- `GOOGLE_CREDENTIALS` = Base64-encoded GCP service account credentials. The values are also stored in Bitwarden (https://vault.bitwarden.com/#/vault?collectionId=f01ca6b8-222e-4eeb-883b-b0310095843e) under the secret `Terraform Service Account`.
 - `GOOGLE_PROJECT` = GCP project ID.
 - `GOOGLE_REGION` = GCP project default region.
 - `GOOGLE_BUCKET` = GCP bucket for storing Terraform state.
@@ -51,7 +51,7 @@ We try to keep as little secret variables as possible by design. For the sake of
 - `GOOGLE_AUTH_GRAFANA_CLIENT_SECRET` = The client secret of the GCP OAuth Grafana client.
 - `GOOGLE_AUTH_TRAEFIK_CLIENT_ID` = The client ID of the GCP OAuth Traefik client.
 - `GOOGLE_AUTH_TRAEFIK_CLIENT_SECRET` = The client secret of the GCP OAuth Traefik client.
-- `ARGOCD_CREDENTIALS_KEY` = Base64-encoded ArgoCD credentials private key from the previously generated keypair.
+- `ARGOCD_CREDENTIALS_KEY` = Base64-encoded ArgoCD credentials private key from the previously generated keypair. The values are also stored in Bitwarden (https://vault.bitwarden.com/#/vault?collectionId=f01ca6b8-222e-4eeb-883b-b0310095843e) under the secret `Terraform Service Account`.
 
 ### Non-secret variables
 
