@@ -20,10 +20,6 @@ spec:
       releaseName: rabbitmq
       valueFiles:
         - ./values.yaml
-      service:
-        type: ClusterIP
-        ports:
-          http: 15692
   syncPolicy:
     automated:
       prune: true
