@@ -19,6 +19,9 @@ rabbitmq-cluster-operator:
       tag: 2.2.0-scratch-r4
     metrics:
       enabled: true
+      service:
+        ports:
+          http: 15692
       serviceMonitor:
         enabled: true
         namespace: rabbitmq
