@@ -7,7 +7,7 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/component: rabbitmq
-      argocd.argoproj.io/instance: rabbitmq-app
+      argocd.argoproj.io/instance: rabbitmq
       app.kubernetes.io/name: rabbitmq-ha-cluster
   endpoints:
   - port: prometheus
